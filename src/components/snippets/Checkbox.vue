@@ -1,28 +1,21 @@
 <template>
   <label class="checkbox">
-    <input type="checkbox" ref="checkbox" @change="onChange">
+    <input type="checkbox" :checked="modelValue" @input="onInput">
     <span class="checkmark" />
   </label>
 </template>
 
 <script>
-import { ref } from 'vue'
 export default {
   name: 'Checkbox',
   props: {
-    checked: {
+    modelValue: {
+      type: Boolean,
       default: false
-    }
-  },
-  setup() {
-    const checkbox = ref('')
-    return { checkbox }
-  },
-  mounted() {
-    this.$refs.checkbox.checked = this.checked
+    },
   },
   methods: {
-    onChange(e) {
+    onInput(e) {
       this.$emit('update:modelValue', e.target.checked)
     }
   }

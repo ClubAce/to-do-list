@@ -1,5 +1,5 @@
 <template>
-  <button>
+  <button ref="button" @click.prevent="onClick">
     <slot />
   </button>
 </template>
@@ -9,7 +9,8 @@ import { ref } from 'vue'
 export default {
   name: 'Button',
   props: {
-    click: {
+    modelValue: {
+      type: Boolean,
       default: false
     }
   },
@@ -17,12 +18,9 @@ export default {
     const button = ref('')
     return { button }
   },
-  mounted() {
-    this.$refs.button.checked = this.checked
-  },
   methods: {
-    onChange(e) {
-      this.$emit('update:modelValue', e.target.checked)
+    onClick() {
+      this.$emit('update:modelValue')
     }
   }
 }

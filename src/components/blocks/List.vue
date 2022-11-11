@@ -1,7 +1,7 @@
 <template>
-  <div class="list">
+  <div class="list" data-empty="Ingen opgaver">
     <slot />
-    <ListItem v-for="item in modelValue" :key="item" :model-value="item" />
+    <ListItem v-for="(item, index) in modelValue" :key="item" :model-value="item" @remove="onRemove" :focus="focus == index" />
   </div>
 </template>
 
@@ -14,6 +14,14 @@ export default {
     modelValue: {
       type: Array,
       default: []
+    },
+    focus: {
+      default: 0
+    }
+  },
+  methods: {
+    onRemove(item) {
+      this.$emit('remove', item)
     }
   }
 }
