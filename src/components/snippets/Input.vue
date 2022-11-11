@@ -1,5 +1,5 @@
 <template>
-  <div class="input" ref="input" @input="onInput" @keydown.enter="onEnter" contenteditable tabindex="0" />
+  <div class="input" ref="input" @input="onInput" @blur="onBlur" @keydown.enter="onEnter" contenteditable tabindex="0" />
 </template>
 
 <script>
@@ -31,6 +31,12 @@ export default {
   methods: {
     onInput(e) {
       this.$emit('update:modelValue', e.target.innerText)
+    },
+    onBlur(e) {
+      if (!e.target.innerText.replace(/\s+/g, '').trim().length) {
+        e.target.innerText = ''
+        this.$emit('update:modelValue', e.target.innerText)
+      }
     },
     onEnter(e) {
       if (!this.newline) {

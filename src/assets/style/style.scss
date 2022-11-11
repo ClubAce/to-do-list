@@ -121,10 +121,6 @@ label.checkbox {
       position: relative;
       border-radius: 50%;
       border: 2px solid $grey;
-
-      &:hover {
-        border-color: darken($grey, 10%);
-      }
     }
 
     &:checked ~ .checkmark {
@@ -142,14 +138,6 @@ label.checkbox {
         position: relative;
         border-radius: 50%;
         background-color: $blue;
-      }
-
-      &:hover {
-        border-color: darken($blue, 10%);
-
-        &::before {
-          background-color: darken($blue, 10%);
-        }
       }
     }
   }
@@ -184,16 +172,6 @@ label.checkbox {
 
   &-button {
     cursor: pointer;
-    
-    &:hover {
-      &::before {
-        background-color: darken($grey, 10%);
-      }
-
-      &.trash::before {
-        background-color: $red;
-      }
-    } 
   }
 }
 
@@ -207,10 +185,6 @@ label.checkbox {
   align-items: center;
   background-color: $blue;
   transition: background-color 50ms ease;
-
-  &:hover {
-    background-color: darken($blue, 10%);
-  }
 
   &-icon::before {
     width: 1rem;
@@ -233,6 +207,48 @@ label.checkbox {
     color: white;
     margin: 0 1rem;
     display: none;
+  }
+}
+
+@media (hover: hover) {
+  label.checkbox {
+    input[type=checkbox] {
+      & ~ .checkmark {
+        &:hover {
+          border-color: darken($grey, 10%);
+        }
+      }
+  
+      &:checked ~ .checkmark {
+        &:hover {
+          border-color: darken($blue, 10%);
+  
+          &::before {
+            background-color: darken($blue, 10%);
+          }
+        }
+      }
+    }
+  }
+
+  .icon {
+    &-button {
+      &:hover {
+        &::before {
+          background-color: darken($grey, 10%);
+        }
+
+        &.trash::before {
+          background-color: $red;
+        }
+      } 
+    }
+  }
+
+  .button {
+    &:hover {
+      background-color: darken($blue, 10%);
+    }
   }
 }
 
