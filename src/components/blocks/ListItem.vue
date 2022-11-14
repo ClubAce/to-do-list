@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item">
+  <li class="list-item">
     <div class="list-item__checkbox">
       <Checkbox v-model="modelValue.done" />
     </div>
@@ -7,7 +7,7 @@
     <div class="list-item__remove">
       <div class="icon icon-button trash" @click="onClick" title="Slet opgave" />
     </div>
-  </div>
+  </li>
 </template>
 
 <script>

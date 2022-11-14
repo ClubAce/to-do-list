@@ -17,15 +17,18 @@
   line-height: 24px;
   font-weight: 400;
 
-  color-scheme: light dark; 
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light dark;
+  --color: rgba(255, 255, 255, 0.87);
+  --background-color: #242424;
+  color: var(--color);
+  background-color: var(--background-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color:  transparent;
 }
 
 body {
@@ -36,9 +39,14 @@ body {
 }
 
 .card {
+  display: flex;
+  min-height: 20rem;
+  flex-direction: column;
+
   &__footer {
     width: 100%;
     bottom: 0;
+    margin-top: auto;
     padding: 2rem 2rem 1.5rem;
     display: flex;
     position: fixed;
@@ -48,7 +56,7 @@ body {
 
     * {
       pointer-events: all;
-    } 
+    }
   }
 }
 
@@ -59,14 +67,18 @@ body {
 }
 
 .list {
-  display: grid;
-  align-items: center;
+  width: 100%;
+  position: relative;
   padding-bottom: 5rem;
 
   &-item {
+    z-index: 1;
+    width: 100%;
     display: flex;
+    position: relative;
     align-items: center;
     padding: 1rem 2rem;
+    background-color: var(--background-color);
 
     * ~ * {
       margin-left: 1rem;
@@ -84,18 +96,43 @@ body {
     &__remove {
       flex-shrink: 0;
     }
-
-    &__task {
-
-    }
   }
 
   &:empty::before {
     content: attr(data-empty);
     text-align: center;
     font-style: italic;
+    display: block;
     opacity: 0.5;
     padding: 1rem;
+  }
+
+  &-move {
+    @include transition(0.2s);
+  }
+
+  &-enter {
+    &-active {
+      @include transition(0.2s);
+    }
+
+    &-from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+
+  &-leave {
+    &-to {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    &-active {
+      @include transition(0.2s);
+      position: absolute;
+      z-index: 0;
+    }
   }
 }
 
@@ -115,29 +152,36 @@ label.checkbox {
       width: 100%;
       height: 100%;
       margin: 0;
-      padding: 2px;
+      padding: 3px;
+      display: flex;
       cursor: pointer;
-      display: block;
       position: relative;
       border-radius: 50%;
-      border: 2px solid $grey;
-    }
-
-    &:checked ~ .checkmark {
-      display: flex;
       align-items: center;
       justify-content: center;
-      border-color: $blue;
+      border: 2px solid $grey;
+      @include transition(75ms);
 
       &::before {
-        width: 100%;
-        height: 100%;
+        width: 0%;
+        height: 0%;
         content: '';
         flex-shrink: 1;
         display: block;
         position: relative;
         border-radius: 50%;
         background-color: $blue;
+        @include transition(0.1s);
+      }
+    }
+
+    &:checked ~ .checkmark {
+      border-color: $blue;
+
+      &::before {
+        width: 100%;
+        height: 100%;
+        content: '';
       }
     }
   }
@@ -146,7 +190,9 @@ label.checkbox {
 .input {
   width: 100%;
   cursor: text;
-  line-height: 1.2;
+  display: inline-block;
+  line-height: 1.25;
+  //line-height: 2.375rem;
   word-break: break-word;
 
   &[placeholder]:empty::before {
@@ -172,6 +218,10 @@ label.checkbox {
 
   &-button {
     cursor: pointer;
+    
+    &::before {
+      @include transition(0.15s);
+    }
   }
 }
 
@@ -184,7 +234,7 @@ label.checkbox {
   user-select: none;
   align-items: center;
   background-color: $blue;
-  transition: background-color 50ms ease;
+  @include transition(75ms);
 
   &-icon::before {
     width: 1rem;
@@ -277,13 +327,14 @@ label.checkbox {
       padding: 2rem 0 0;
       position: sticky;
       bottom: 2rem;
+      z-index: 1;
     }
   }
 
   .title {
     padding: 1rem;
     margin-bottom: 2rem;
-    font-size: xx-large;
+    font-size: 1.875rem;
   }
   
   .list {
@@ -294,7 +345,7 @@ label.checkbox {
   
     &-item {
       padding: 1.5rem;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       border-radius: 0.5rem;
       background-color:rgba(255, 255, 255, 0.1);
       @include shading;
@@ -303,7 +354,7 @@ label.checkbox {
         margin-left: 1.5rem;
       }
   
-      & ~ & {
+      &:not([class*=leave-active]) ~ & {
         margin-top: 1rem;
         border: 0;
       }
@@ -311,20 +362,20 @@ label.checkbox {
       &:last-child {
         border: 0;
       }
-
-      &__task {
-        
-      }
     }
 
     &:empty::before {
-      padding: 1.78rem;
+      padding: 1.75rem;
     }
   }
   
   label.checkbox {
     width: 1.375rem;
     height: 1.375rem;
+  }
+
+  .input {
+    line-height: 1.2;
   }
 
   .icon-button {
@@ -343,8 +394,8 @@ label.checkbox {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #333333;
-    background-color:#ffffff;
+    --color: #333333;
+    --background-color:#ffffff;
   }
 
   .input[placeholder]:empty::before {

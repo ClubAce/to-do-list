@@ -2,6 +2,10 @@
   box-shadow: inset 0px 2px 2px -2px rgba(255, 255, 255, 0.2), 0px 1px 5px -5px rgba(0, 0, 0, 0.5);
 }
 
+@mixin transition($duration) {
+  transition: $duration ease all;
+}
+
 @mixin icon($image, $color) {
   -webkit-mask-size: contain;
   -webkit-mask-repeat: no-repeat;
