@@ -44,6 +44,7 @@ body {
   flex-direction: column;
 
   &__footer {
+    z-index: 1;
     width: 100%;
     bottom: 0;
     margin-top: auto;
@@ -265,16 +266,16 @@ label.checkbox {
     input[type=checkbox] {
       & ~ .checkmark {
         &:hover {
-          border-color: darken($grey, 10%);
+          border-color: lighten($grey, 5%);
         }
       }
   
       &:checked ~ .checkmark {
         &:hover {
-          border-color: darken($blue, 10%);
+          border-color: lighten($blue, 5%);
   
           &::before {
-            background-color: darken($blue, 10%);
+            background-color: lighten($blue, 5%);
           }
         }
       }
@@ -285,9 +286,9 @@ label.checkbox {
     &-button {
       &:hover {
         &::before {
-          background-color: darken($grey, 10%);
+          background-color: lighten($grey, 5%);
         }
-
+        
         &.trash::before {
           background-color: $red;
         }
@@ -297,7 +298,7 @@ label.checkbox {
 
   .button {
     &:hover {
-      background-color: darken($blue, 10%);
+      background-color: lighten($blue, 5%);
     }
   }
 }
@@ -347,7 +348,7 @@ label.checkbox {
       padding: 1.5rem;
       font-size: 1.25rem;
       border-radius: 0.5rem;
-      background-color:rgba(255, 255, 255, 0.1);
+      background-color:#444444;
       @include shading;
 
       * ~ * {
@@ -416,6 +417,44 @@ label.checkbox {
 
       &:last-child {
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  @media (hover: hover) {
+    label.checkbox {
+      input[type=checkbox] {
+        & ~ .checkmark {
+          &:hover {
+            border-color: darken($grey, 10%);
+          }
+        }
+    
+        &:checked ~ .checkmark {
+          &:hover {
+            border-color: darken($blue, 10%);
+    
+            &::before {
+              background-color: darken($blue, 10%);
+            }
+          }
+        }
+      }
+    }
+  
+    .icon {
+      &-button {
+        &:hover {
+          &::before {
+            background-color: darken($grey, 10%);
+          }
+        } 
+      }
+    }
+  
+    .button {
+      &:hover {
+        background-color: darken($blue, 5%);
       }
     }
   }
